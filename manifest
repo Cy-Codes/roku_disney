@@ -1,0 +1,13 @@
+#
+# Roku Channel Manifest File 
+# Full spec at bit.ly/roku-manifest-file
+#
+
+## Channel Details
+title=Roku Disney
+major_version=1
+minor_version=0
+build_version=0
+
+## Channel Assets
+### ToDo: Add these later..if needed. 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="InitScene" extends="Scene">
+    <script type="text/brightscript" uri="pkg:/components/InitScene.brs" />
+
+    <children>
+        <Label
+            id="initLabel"
+            text="Hello Disney"
+            width="1280"
+            height="720"
+            horizAlign="center"
+            vertAlign="center"
+        />
+    </children>
+</component>
