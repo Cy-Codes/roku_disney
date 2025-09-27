@@ -4,7 +4,7 @@ sub main()
     m.port = CreateObject("roMessagePort")
     screen.setMessagePort(m.port)
 
-    scene = screen.CreateScene("InitScene")
+    scene = screen.CreateScene("MainScene")
     screen.show()
 
     while(true)
@@ -12,6 +12,9 @@ sub main()
         msgType = type(msg)
         if msgType = "roSGScreenEvent"
             if msg.isScreenClosed() then return
+        else if msgType = "roSGNodeEvent" then
+            field = msg.getField()
+
         end if
     end while
 end sub
