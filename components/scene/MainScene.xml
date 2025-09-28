@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="MainScene" extends="Scene">
-    <script type="text/brightscript" uri="pkg:/components/scene/MainScene.brs" />
 
     <children>
         <Label
-            id="initLabel"
-            text="Hello Disney"
-            width="1280"
-            height="720"
-            horizAlign="center"
-            vertAlign="center"
-        />
+            id="mainTitle"
+            translation="[100, 100]"
+            text="Main Title" />
+        <Label
+            id="dataRecieved"
+            translation="[100, 200]"
+            text="No data recieved" />
+
+        <Label
+            id="statusLabel"
+            translatoin="[100, 300]"
+            text="Press OK to fetch data" />
     </children>
+
+    <script type="text/brightscript" uri="pkg:/components/scene/MainScene.brs" />
 </component>

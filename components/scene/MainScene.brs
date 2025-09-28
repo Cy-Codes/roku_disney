@@ -1,24 +1,42 @@
 sub init()
-    m.top.setFocus(true)
-    ' junk to remove after I build the proer scene
-    m.initLabel = m.top.findNode("initLabel")
-    m.initLabel.font.size = 92
-
-    fetchHomeData()
+    ? "MainScene: init()"
+    m.uriFetcher = CreateObject("roSGNode", "UriFetcher")
+    m.statusLabel = m.top.findNode("dataRecieved")
 end sub
 
-sub fetchHomeData()
-    if m.progress = invalid then
-        m.progress = createObject("roSGNode", "ProgressDialog")
-        m.progress.title = "Loading...I assume"
-        m.progress.message = "Did you know:" + chr(10) + "You can use the replay key to update the list!"
-        m.top.dialog = m.progress
+function onKeyEvent(key as string, press as boolean) as boolean
+    if press
+        if key = "OK"
+            ? "OK key event, makeRequest()"
+            uri = "https://cd-static.bamgrid.com/dp-117731241344/home.json"
+            makeRequest({ uri: uri }, "uriResult")
+        end if
     end if
+end function
 
-    if m.homeRequest <> invalid then
-        m.homeRequest.unobserveField("homeContent")
+sub makeRequest(parameters as object, callback as string)
+    ? "MainScene: makeRequest()"
+    context = CreateObject("roSGNode", "Node")
+    if type(parameters) = "roAssociativeArray"
+        context.addFields({ parameters: parameters, response: {} })
+        context.observeField("response", callback)
+        m.uriFetcher.request = { context: context }
     end if
-    m.homeRequest = CreateObject("roSGNode", "HomeTask")
-    m.homeRequest.control = "RUN"
-    ' Todo: Clear progress bar after
+end sub
+
+sub uriResult(msg as object)
+    ? "MainScene: uriResult"
+    msgType = type(msg)
+    if msgType = "roSGNodeEvent"
+        ? "Results recieved"
+        context = msg.getRoSGNode()
+        response = msg.getData()
+
+        if response.code = 200
+            m.statusLabel.text = "200: Success"
+            content = ParseJson(response.content)
+        else
+            m.statusLabel.text = "Shits Fucked!"
+        end if
+    end if
 end sub

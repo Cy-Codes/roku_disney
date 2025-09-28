@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component name="UriFetcher" extends="Task">
+    <interface>
+        <field id="request" type="assocArray" />
+        <field id="response" type="Node" />
+    </interface>
+
+    <script type="text/brightscript" uri="UriFetcher.brs" />
+</component>
