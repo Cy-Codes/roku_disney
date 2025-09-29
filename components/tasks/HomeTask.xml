@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="HomeTask" extends="Task">
+    <script type="text/brightscript" uri="pkg:/components/tasks/HomeTask.brs" />
+
+    <interface>
+        <field id="homeUri" type="uri"
+            value="https://cd-static.bamgrid.com/dp-117731241344/home.json" />
+        <field id="homeContent" type="node" />
+    </interface>
+
+</component>

@@ -1,11 +1,11 @@
 sub main()
-    print "main.brs - sub main()"
+    ? "main: createScreen"
     screen = CreateObject("roSGScreen")
-    m.port = CreateObject("roMessagePort")
+    port = CreateObject("roMessagePort")
     screen.setMessagePort(m.port)
-
-    scene = screen.CreateScene("InitScene")
+    scene = screen.CreateScene("MainScene")
     screen.show()
+    scene.setFocus(true)
 
     while(true)
         msg = wait(0, m.port)
