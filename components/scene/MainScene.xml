@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="MainScene" extends="Scene">
+    <script type="text/brightscript" uri="MainScene.brs" />
+    <script type="text/brightscript" uri="pkg:/source/utils/logger.brs" />
 
     <children>
         <Label
-            id="mainTitle"
-            translation="[100, 100]"
-            text="Main Title" />
+            id=" mainTitle"
+            translation=" [100, 100]"
+            text=" Main Title" />
         <Label
-            id="dataRecieved"
-            translation="[100, 200]"
-            text="No data recieved" />
-
-        <Label
-            id="statusLabel"
-            translatoin="[100, 300]"
-            text="Press OK to fetch data" />
+            id=" dataRecieved"
+            translation=" [100, 200]"
+            text=" No data recieved" />
     </children>
 
-    <script type="text/brightscript" uri="pkg:/components/scene/MainScene.brs" />
 </component>

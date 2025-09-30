@@ -1,24 +1,23 @@
 sub init()
-    ? "MainScene: init()"
-    m.uriFetcher = CreateObject("roSGNode", "UriFetcher")
-    m.statusLabel = m.top.findNode("dataRecieved")
+    m.componentName = m.top.subType()
+    logDebug(m.componentName, "init", "")
+    ' m.uriFetcher = CreateObject("roSGNode", "UriFetcher")
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if press
         if key = "OK"
-            ? "OK key event, makeRequest()"
-            uri = "https://cd-static.bamgrid.com/dp-117731241344/home.json"
-            makeRequest({ uri: uri }, "uriResult")
+            logDebug(m.componentName, "okKeyEvent", "OK pressed")
         end if
     end if
 end function
 
-sub makeRequest(parameters as object, callback as string)
-    ? "MainScene: makeRequest()"
+' ToDo: support sending verb in params to specify HTTP request type
+sub makeRequest(params as object, callback as string)
+    logInfo(m.componentName, "makeRequest", params?.uri)
     context = CreateObject("roSGNode", "Node")
-    if type(parameters) = "roAssociativeArray"
-        context.addFields({ parameters: parameters, response: {} })
+    if type(params) = "roAssociativeArray"
+        context.addFields({ params: params, response: {} })
         context.observeField("response", callback)
         m.uriFetcher.request = { context: context }
     end if
@@ -33,10 +32,9 @@ sub uriResult(msg as object)
         response = msg.getData()
 
         if response.code = 200
-            m.statusLabel.text = "200: Success"
             content = ParseJson(response.content)
         else
-            m.statusLabel.text = "Shits Fucked!"
+            logError(m.componentName, "uriResult", "Failed to get network results.")
         end if
     end if
 end sub
