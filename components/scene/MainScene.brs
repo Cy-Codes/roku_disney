@@ -1,20 +1,22 @@
 sub init()
     m.componentName = m.top.subType()
-    logInfo(m.componentName, "init", "")
-    m.uriFetcher = CreateObject("roSGNode", "UriFetcher")
+    logInfo(m.componentName, "init", "MainScene initialized")
+
+    m.aRowList = m.top.findNode("aRowList")
+    m.aRowList.setFocus(true)
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if press
         if key = "OK"
             logDebug(m.componentName, "okKeyEvent", "OK pressed")
-
         end if
     end if
 end function
 
 ' ToDo: support sending verb in params to specify HTTP request type
 sub makeRequest(params as object, callback as string)
+    m.uriFetcher = CreateObject("roSGNode", "UriFetcher")
     logInfo(m.componentName, "makeRequest", params?.uri)
     context = CreateObject("roSGNode", "Node")
     if type(params) = "roAssociativeArray"

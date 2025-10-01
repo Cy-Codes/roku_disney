@@ -4,14 +4,17 @@
     <script type="text/brightscript" uri="pkg:/source/utils/logger.brs" />
 
     <children>
+        <!-- ToDo: Use a progress dialog -->
         <Label
-            id=" mainTitle"
-            translation=" [100, 100]"
-            text=" Main Title" />
-        <Label
-            id=" dataRecieved"
+            id=" loadingIndicator"
             translation=" [100, 200]"
-            text=" No data recieved" />
+            text=" Loading..."
+        />
+
+        <aRowList
+            id="aRowList"
+            translation="[50, 50]"
+        />
     </children>
 
 </component>
