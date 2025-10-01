@@ -13,7 +13,7 @@
             id="homePostfixUri"
             type="string"
             value="home.json" />
-        <!-- use refId from home.json, don't forget to add .json when assembling the URI -->
+        <!-- append {refId}.json from home.json -->
         <field
             id="setRefPostfixUri"
             type="string"
@@ -23,7 +23,7 @@
     <children>
         <aRowList
             id="aRowList"
-            translation="[50, 50]"
+            translation="[100, 50]"
             visible="false"
         />
     </children>

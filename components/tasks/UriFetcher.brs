@@ -1,4 +1,5 @@
 sub init()
+    m.componentName = m.top.subType()
     m.port = CreateObject("roMessagePort")
     m.top.observeField("request", m.port)
     m.top.functionName = "go"
@@ -14,8 +15,9 @@ sub go()
             request = CreateObject("roUrlTransfer")
             request.setMessagePort(m.port)
             request.setCertificatesFile("common:/certs/ca-bundle.crt")
+            ' I don't need the devId, but I'll want to reference this later.
+            request.addHeader("X-Roku-Reserved-Dev-Id", "")
             request.initClientCertificates()
-            ' FixMe: put the url builder back.
             request.setUrl(msg.getData().context.params.uri)
             request.setPort(m.port)
             request.asyncGetToString()
@@ -25,13 +27,20 @@ sub go()
     end while
 end sub
 
+' @description Create  RokuDisney registry and set DebugEnabled flag
+' @param isDebugMode should debug logs be enabled
+' @returns void
 sub processResponse(msg as object)
-    '  this does at least get my data from the home.json
+    responseCode = msg.getResponseCode()
+    ' ToDo: support other response codes
+    ' I know I don't need it for this demo, but not having it bugs me.
     if msg.getResponseCode() = 200
         result = { code: msg.getResponseCode(), content: msg.getString() }
         context = m.top.request.context
         if context <> invalid
             context.response = result
         end if
+    else
+        logError(m.componentName, "processResponse", "Unexpected response code: " + responseCode)
     end if
 end sub

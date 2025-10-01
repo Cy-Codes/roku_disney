@@ -12,17 +12,24 @@ sub init()
     m.aRowList = m.top.findNode("aRowList")
 end sub
 
+' @description handle key presses from roku remote
+' @param key string name of key pressed
+' @returns true if key handled, faile if not
 function onKeyEvent(key as string, press as boolean) as boolean
     if press
         logDebug(m.componentName, "onKeyEvent", key)
         if key = "replay" or key = "OK"
             logDebug(m.componentName, "onKeyEvent", key + " pressed")
             makeRequest({ uri: m.homeUri }, "uriResult")
+            return true
         end if
     end if
+    return false
 end function
 
-' ToDo: support sending verb in params to specify HTTP request type
+' @description creates uriFetcher to get data from network
+' @param params params {uri: required, method: GET if not defined}
+' @param callback the callback that will listen for uriFetcher results
 sub makeRequest(params as object, callback as string)
     logDebug(m.componentName, "makeRequest", "Fetching data")
     m.uriFetcher = CreateObject("roSGNode", "UriFetcher")
