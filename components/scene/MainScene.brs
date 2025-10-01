@@ -1,13 +1,14 @@
 sub init()
     m.componentName = m.top.subType()
-    logDebug(m.componentName, "init", "")
-    ' m.uriFetcher = CreateObject("roSGNode", "UriFetcher")
+    logInfo(m.componentName, "init", "")
+    m.uriFetcher = CreateObject("roSGNode", "UriFetcher")
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if press
         if key = "OK"
             logDebug(m.componentName, "okKeyEvent", "OK pressed")
+
         end if
     end if
 end function
