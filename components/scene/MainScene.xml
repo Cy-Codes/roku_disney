@@ -3,15 +3,29 @@
     <script type="text/brightscript" uri="MainScene.brs" />
     <script type="text/brightscript" uri="pkg:/source/utils/logger.brs" />
 
+    <interface>
+        <!-- URIs to fetch content -->
+        <field
+            id="baseUri"
+            type="string"
+            value="https://cd-static.bamgrid.com/dp-117731241344/" />
+        <field
+            id="homePostfixUri"
+            type="string"
+            value="home.json" />
+        <!-- use refId from home.json, don't forget to add .json when assembling the URI -->
+        <field
+            id="setRefPostfixUri"
+            type="string"
+            value="sets/" />
+    </interface>
+
     <children>
-        <Label
-            id=" mainTitle"
-            translation=" [100, 100]"
-            text=" Main Title" />
-        <Label
-            id=" dataRecieved"
-            translation=" [100, 200]"
-            text=" No data recieved" />
+        <aRowList
+            id="aRowList"
+            translation="[50, 50]"
+            visible="false"
+        />
     </children>
 
 </component>

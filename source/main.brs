@@ -1,14 +1,18 @@
 sub main()
-    ' showChannelRSGScreen()
+    ' ToDo: support logging levels & rename to setLoggingLevel
+    debugEnabled = true
+    setDebugMode(debugEnabled)
+    showChannelRSGScreen()
+end sub
+
+' @description Crea.te's, shows, and setsFocus of MainScene
+sub showChannelRSGScreen()
     screen = CreateObject("roSGScreen")
     m.port = CreateObject("roMessagePort")
     screen.setMessagePort(m.port)
     scene = screen.CreateScene("MainScene")
     screen.show()
-
-    debugEnabled = true
-    setup(debugEnabled)
-
+    scene.setFocus(true)
     while(true)
         msg = wait(0, m.port)
         msgType = type(msg)
@@ -18,19 +22,10 @@ sub main()
     end while
 end sub
 
-' @description Create's, shows, and setsFocus of MainScene
-sub showChannelRSGScreen()
-    screen = CreateObject("roSGScreen")
-    m.port = CreateObject("roMessagePort")
-    screen.setMessagePort(m.port)
-    scene = screen.CreateScene("MainScene")
-    screen.show()
-end sub
-
 ' @description Create  RokuDisney registry and set DebugEnabled flag
 ' @param isDebugMode should debug logs be enabled
 ' @returns void
-sub setup(isDebugMode as boolean)
+sub setDebugMode(isDebugMode as boolean)
     sec = createObject("roRegistrySection", "RokuDisney")
     if isDebugMode
         sec.write("DebugEnabled", "true")
