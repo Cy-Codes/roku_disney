@@ -2,23 +2,7 @@
 <component name="MainScene" extends="Scene">
     <script type="text/brightscript" uri="MainScene.brs" />
     <script type="text/brightscript" uri="pkg:/source/utils/logger.brs" />
-
-    <interface>
-        <!-- URIs to fetch content -->
-        <field
-            id="baseUri"
-            type="string"
-            value="https://cd-static.bamgrid.com/dp-117731241344/" />
-        <field
-            id="homePostfixUri"
-            type="string"
-            value="home.json" />
-        <!-- append {refId}.json from home.json -->
-        <field
-            id="setRefPostfixUri"
-            type="string"
-            value="sets/" />
-    </interface>
+    <script type="text/brightscript" uri="pkg:/source/utils/constants.brs" />
 
     <children>
         <aRowList

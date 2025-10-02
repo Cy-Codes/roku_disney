@@ -1,14 +1,11 @@
 sub init()
     m.componentName = m.top.subType()
-    logInfo(m.componentName, "init", "MainScene initialized")
+    logInfo(m.componentName, "init", "")
     m.progress = CreateObject("roSGNode", "ProgressDialog")
-    logDebug(m.componentName, "init", m.progress)
     m.progress.title = "Loading"
     m.progress.message = "Fetching home content"
     m.top.dialog = m.progress
-    m.homeUri = m.top.baseUri + m.top.homePostfixUri
-    makeRequest({ uri: m.homeUri }, "homeUriResult")
-
+    makeRequest({ uri: getHomeUrl() }, "uriResult")
     m.aRowList = m.top.findNode("aRowList")
 end sub
 
@@ -45,23 +42,23 @@ end sub
 
 ' @description callback to handle results foir the home.json
 ' @param msg object data from home.json
-sub homeUriResult(msg as object)
-    logDebug(m.componentName, "homeUriResult", "Do stuff with home.json data")
+sub uriResult(msg as object)
+    logDebug(m.componentName, "uriResult", "")
     msgType = type(msg)
     if msgType = "roSGNodeEvent"
         context = msg.getRoSGNode()
         response = msg.getData()
         if response.code = 200
-            content = ParseJson(response.content)
+            ' content = ParseJson(response.content)
             m.progress.close = true
             m.aRowList.visible = true
             m.aRowList.setFocus(true)
         else
-            logError(m.componentName, "homeUriResult", "Failed to get network results.")
+            logError(m.componentName, "uriResult", "Failed to get network results.")
             m.progress.close = true
             ' ToDo: Show message to user about replay to attempt to reload the home.json
         end if
     else
-        logError(m.componentName, "homeUriResult", "Unexpected Error")
+        logError(m.componentName, "uriResult", "Unexpected Error")
     end if
 end sub

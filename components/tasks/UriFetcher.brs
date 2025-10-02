@@ -17,8 +17,11 @@ sub go()
             request.setCertificatesFile("common:/certs/ca-bundle.crt")
             ' I don't need the devId, but I'll want to reference this later.
             request.addHeader("X-Roku-Reserved-Dev-Id", "")
-            request.initClientCertificates()
-            request.setUrl(msg.getData().context.params.uri)
+            msgParams = msg.getData().context.params
+            m.url = msgParams.uri
+            ' Expected if fetching setRef & used in processResponse(msg) to verify what I'm processing
+            m.refId = msgParams.refId
+            request.setUrl(m.url)
             request.setPort(m.port)
             request.asyncGetToString()
         else if msgType = "roUrlEvent"
@@ -28,17 +31,28 @@ sub go()
 end sub
 
 ' @description Handle response from roUrlTransfer
-' @param msg response from roUriTransfer
+' @param msg response from roUrlTransfer
 sub processResponse(msg as object)
+    failureReason = msg.getFailureReason()
     responseCode = msg.getResponseCode()
+    ' logDebug(m.componentName, "ProcessResponse", "FailureReason: " + failureReason + " code: " + responseCode)
     ' ToDo: support other response codes.
-    if msg.getResponseCode() = 200
-        result = { code: msg.getResponseCode(), content: msg.getString() }
+    if failureReason = "OK"
+        ' I hate this hack. I hope I have time to fix this. -CyM
+        ' Only haveing 2 URLs to check, this'll work, but oh so unexceptable.
+        if m.url = getHomeUrl()
+            curatedSet = createCuratedSet(parseJson(msg.getString()))
+            m.result = { code: msg.getResponseCode(), content: curatedSet }
+        else ' if m.url = getSetRefUrl(m.refId) ' Maybe check this way and use else for logError(unk url)
+            setRef = createSetRef(msg.getString())
+            m.result = { code: msg.getResponseCode(), content: setRef }
+        end if
+        ' ToDo: I forget what request.context is, thow a debugger on a check
         context = m.top.request.context
         if context <> invalid
-            context.response = result
+            context.response = m.result
         end if
     else
-        logError(m.componentName, "processResponse", "Unexpected response code: " + responseCode)
+        logError(m.componentName, "processResponse", "Unexpected response: " + failureReason + " code: " + responseCode)
     end if
 end sub
