@@ -1,29 +1,5 @@
-sub init()
-    m.top.functionName = "fetchHomeContent"
-end sub
-
-sub fetchHomeContent()
-    ' tracking request time for debugging ToDo: Remove or comment out for release
-    tiemSpan = createObject("roTimeSpan")
-
-    homeContent = createObject("roSGNode", "ContentNode")
-
-
-    request = createObject("roUrlTransfer")
-    request.setMessagePort(port)
-    request.setCertificatesFile("common:/certs/ca-bundle.crt")
-    request.addHeader("X-Roku-Reserved-Dev-Id", "")
-    request.initClientCertificates()
-    ' FixMe: put the url in a const
-    request.setUrl(m.top.homeUri)
-    ' FixMe: add error checking to this!
-    response = request.getToString()
-    json = parseJson(response)
-    ? "fetch took", tiemSpan.totalMilliseconds().toStr(), " milliseconds"
-
-    createContainers(json)
-end sub
-
+' @description parse out data I want from home.json
+' @param json content from home.json
 sub createContainers(json as object)
     ' ToDo: name things better
     containers = json.data.StandardCollection.containers

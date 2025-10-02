@@ -1,13 +1,13 @@
 sub init()
     m.componentName = m.top.subType()
     logInfo(m.componentName, "init", "MainScene initialized")
-
     m.progress = CreateObject("roSGNode", "ProgressDialog")
-    m.progress.title = "Fetching content"
-    m.progress.message = "Press " + chr(10) + " to reload content."
+    logDebug(m.componentName, "init", m.progress)
+    m.progress.title = "Loading"
+    m.progress.message = "Fetching home content"
     m.top.dialog = m.progress
     m.homeUri = m.top.baseUri + m.top.homePostfixUri
-    makeRequest({ uri: m.homeUri }, "uriResult")
+    makeRequest({ uri: m.homeUri }, "homeUriResult")
 
     m.aRowList = m.top.findNode("aRowList")
 end sub
@@ -27,6 +27,7 @@ function onKeyEvent(key as string, press as boolean) as boolean
     return false
 end function
 
+' ToDo: Move this elsewhere. I'd like the MainScene to be as thin as possible.
 ' @description creates uriFetcher to get data from network
 ' @param params params {uri: required, method: GET if not defined}
 ' @param callback the callback that will listen for uriFetcher results
@@ -42,7 +43,10 @@ sub makeRequest(params as object, callback as string)
     end if
 end sub
 
-sub uriResult(msg as object)
+' @description callback to handle results foir the home.json
+' @param msg object data from home.json
+sub homeUriResult(msg as object)
+    logDebug(m.componentName, "homeUriResult", "Do stuff with home.json data")
     msgType = type(msg)
     if msgType = "roSGNodeEvent"
         context = msg.getRoSGNode()
@@ -53,9 +57,11 @@ sub uriResult(msg as object)
             m.aRowList.visible = true
             m.aRowList.setFocus(true)
         else
-            logError(m.componentName, "uriResult", "Failed to get network results.")
+            logError(m.componentName, "homeUriResult", "Failed to get network results.")
             m.progress.close = true
             ' ToDo: Show message to user about replay to attempt to reload the home.json
         end if
+    else
+        logError(m.componentName, "homeUriResult", "Unexpected Error")
     end if
 end sub

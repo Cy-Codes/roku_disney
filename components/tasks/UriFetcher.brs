@@ -27,13 +27,11 @@ sub go()
     end while
 end sub
 
-' @description Create  RokuDisney registry and set DebugEnabled flag
-' @param isDebugMode should debug logs be enabled
-' @returns void
+' @description Handle response from roUrlTransfer
+' @param msg response from roUriTransfer
 sub processResponse(msg as object)
     responseCode = msg.getResponseCode()
-    ' ToDo: support other response codes
-    ' I know I don't need it for this demo, but not having it bugs me.
+    ' ToDo: support other response codes.
     if msg.getResponseCode() = 200
         result = { code: msg.getResponseCode(), content: msg.getString() }
         context = m.top.request.context
