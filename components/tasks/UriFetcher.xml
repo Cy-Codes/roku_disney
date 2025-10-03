@@ -9,6 +9,6 @@
 
     <interface>
         <field id="request" type="assocArray" />
-        <field id="response" type="Node" />
+        <field id="response" type="assocArray" />
     </interface>
 </component>

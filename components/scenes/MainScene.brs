@@ -6,8 +6,6 @@ sub init()
     m.progress.message = "Fetching home content"
     m.top.dialog = m.progress
     makeRequest({ uri: getHomeUrl() }, "uriResult")
-    m.aRowList = m.top.findNode("aRowList")
-    m.aRowList.setFocus(true)
 end sub
 
 ' @description handle key presses from roku remote
@@ -45,22 +43,23 @@ end sub
 ' @description callback to handle results foir the home.json
 ' @param msg object data from home.json
 sub uriResult(msg as object)
-    logDebug(m.componentName, "uriResult", "")
     msgType = type(msg)
     if msgType = "roSGNodeEvent"
+        logDebug(m.componentName, "uriResult", "msgType: roSGNodeEvent")
         context = msg.getRoSGNode()
         response = msg.getData()
-        if response.code = 200
-            ' content = ParseJson(response.content)
-            m.progress.close = true
-            m.aRowList.visible = true
-            m.aRowList.setFocus(true)
-        else
-            logError(m.componentName, "uriResult", "Failed to get network results.")
-            m.progress.close = true
-            ' ToDo: Show message to user about replay to attempt to reload the home.json
-        end if
+        ' content = ParseJson(response.content)
+        m.progress.close = true
+        m.aRowList.visible = true
+        m.aRowList.setFocus(true)
     else
-        logError(m.componentName, "uriResult", "Unexpected Error")
+        logError(m.componentName, "uriResult", "Failed to get network results.")
+        m.progress.close = true
+        ' ToDo: Show message to user about replay to attempt to reload the home.json
     end if
+end sub
+
+sub setUpRows()
+    m.aRowList = m.top.findNode("aRowList")
+    m.aRowList.setFocus(true)
 end sub

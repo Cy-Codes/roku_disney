@@ -41,12 +41,12 @@ sub processResponse(msg as object)
         ' I hate this hack. I hope I have time to fix this. -CyM
         ' Only haveing 2 URLs to check, this'll work, but oh so unexceptable.
         if m.url = getHomeUrl()
-            curatedSets = handleContent(parseJson(msg.getString()))
-            ' FixMe: I doub't I need to pass the responseCode on.
-            m.result = { code: msg.getResponseCode(), content: curatedSets }
+            curatedSets = handleContent(parseJson(msg.getString()), "CuratedSet")
+            ? curatedSets
+            m.result = { content: curatedSets, code: msg.getResponseCode() }
         else ' if m.url = getSetRefUrl(m.refId) ' Maybe check this way and use else for logError(unk url)
-            setRefs = handleContent(parseJson(msg.getString()))
-            m.result = { code: msg.getResponseCode(), content: setRefs }
+            setRefs = handleContent(parseJson(msg.getString()), "refId")
+            m.result = { content: setRefs }
         end if
         context = m.top.request.context
         if context <> invalid
