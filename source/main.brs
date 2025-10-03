@@ -1,6 +1,6 @@
 sub main()
     ' ToDo: support logging levels & rename to setLoggingLevel
-    debugEnabled = true
+    debugEnabled = false
     setDebugMode(debugEnabled)
     showChannelRSGScreen()
 end sub
