@@ -7,6 +7,7 @@ sub init()
     m.top.dialog = m.progress
     makeRequest({ uri: getHomeUrl() }, "uriResult")
     m.aRowList = m.top.findNode("aRowList")
+    m.aRowList.setFocus(true)
 end sub
 
 ' @description handle key presses from roku remote
@@ -15,10 +16,11 @@ end sub
 function onKeyEvent(key as string, press as boolean) as boolean
     if press
         logDebug(m.componentName, "onKeyEvent", key)
-        if key = "replay" or key = "OK"
+        if key = "OK"
             logDebug(m.componentName, "onKeyEvent", key + " pressed")
-            makeRequest({ uri: m.homeUri }, "uriResult")
             return true
+        else if key = "Replay"
+            logDebug(m.componentName, "okKeyEvent", key + " pressed")
         end if
     end if
     return false
