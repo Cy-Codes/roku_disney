@@ -26,7 +26,7 @@ function getRowListContent() as object
         row = data.CreateChild("ContentNode")
         row.title = "Row " + stri(numRows)
         for i = 1 to 3
-            item = row.CreateChild("RowListItem")
+            item = row.CreateChild("RowListItemData")
             item.posterUrl = "http://devtools.web.roku.com/samples/images/Landscape_1.jpg"
             item.labelText = "Item " + stri(numRows * 3 + i)
         end for

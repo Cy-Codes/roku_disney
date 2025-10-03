@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="MainScene" extends="Scene">
+    <script type="text/brightscript" uri="MainScene.brs" />
+    <script type="text/brightscript" uri="pkg:/source/utils/logger.brs" />
+    <script type="text/brightscript" uri="pkg:/source/utils/constants.brs" />
+
+    <children>
+        <aRowList
+            id="aRowList"
+            translation="[100, 50]"
+            visible="false"
+        />
+    </children>
+
+</component>

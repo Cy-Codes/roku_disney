@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="ContentHandler" extends="Node">
+    <script type="text/brightscript" uri="ContentHandler.brs" />
+    <script type="text/brightscrpt" uri="pkg:/source/utils/logger.brs" />
+
+    <interface>
+        <field id=" setList" type="roArray" />
+    </interface>
+</component>
